@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Google Font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+			integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Movie Watchlist</title>
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div class="header-text">
+					<h1>Find your film</h1>
+					<a href="watchlist.html">My Watchlist</a>
+				</div>
+				<div class="search-input">
+					<div class="icon-wrap">
+						<i class="absolute fa-solid fa-magnifying-glass"></i>
+					</div>
+					<input
+						type="text"
+						name="movie-title"
+						id="movie-title"
+						placeholder="Search for a movie"
+					/>
+					<button id="search-button">Search</button>
+				</div>
+			</div>
+		</header>
+
+		<section>
+			<div class="container">
+				<ul id="movie-result-container">
+					<i class="fa-solid fa-film"></i>
+					<p class="start-text">Start Exploring</p>
+					<!-- Inject Movie Search Result Here -->
+				</ul>
+			</div>
+		</section>
+		<script src="index.js"></script>
+	</body>
+</html>

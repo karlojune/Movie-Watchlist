@@ -1,0 +1,194 @@
+body {
+	font-family: "Inter", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	margin: 0 auto;
+}
+
+.container {
+	width: 500px;
+	max-width: 90%;
+	margin: 0 auto;
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+header .container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+header {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: linear-gradient(
+			0deg,
+			rgba(0, 0, 0, 0.7),
+			rgba(0, 0, 0, 0.7)
+		),
+		url("images/header-bg.jpg");
+	height: 250px;
+	color: #fff;
+}
+
+.header-text {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: -25px;
+	height: 100%;
+}
+
+header .container {
+}
+
+.search-input {
+	display: flex;
+	justify-content: center;
+	margin-bottom: -25px;
+}
+
+.search-input input {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top: 2px solid #d1d5db;
+	border-right: none;
+	border-left: 2px solid #d1d5db;
+	border-bottom: 2px solid #d1d5db;
+	padding: 0.8em 0.8em 0.8em 2em;
+	width: 70%;
+}
+
+.search-input button {
+	font-family: inherit;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: 2px solid #d1d5db;
+	width: 30%;
+	cursor: pointer;
+}
+
+.search-input {
+	position: relative;
+}
+
+.icon-wrap {
+	color: #9ca3af;
+	position: absolute;
+	height: 100%;
+	left: 10px;
+	top: 0;
+	display: flex;
+	align-items: center;
+}
+
+ul {
+	display: grid;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	text-indent: 0;
+}
+
+li:not(:last-child) {
+	border-bottom: 1.5px solid #e5e7eb;
+}
+
+section {
+	margin-top: 50px;
+}
+
+img {
+	width: 100%;
+	max-width: 120px;
+	object-fit: cover;
+}
+
+.movie-container {
+	padding: 2em 0;
+	gap: 1.5em;
+}
+
+/* Movie Container List */
+.movie-container,
+.movie-detail,
+.movie-title,
+.movie-runtime {
+	display: flex;
+}
+
+.movie-detail {
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 0.75em;
+}
+
+/* Movie Title */
+.movie-title {
+	gap: 0.5em;
+	align-items: center;
+}
+
+.title {
+	font-size: 1.125rem;
+	font-weight: 500;
+	max-width: 23ch;
+}
+
+.fa-star {
+	color: #fec654;
+}
+
+.rating,
+.fa-star {
+	font-size: 0.75rem;
+}
+
+/* Movie Runtime */
+.movie-runtime {
+	font-size: 0.75rem;
+	gap: 1.5em;
+	align-items: center;
+}
+
+#add-to-watchlist {
+	border: none;
+	background-color: #fff;
+	margin: 0;
+	padding: 0.5em;
+	cursor: pointer;
+}
+
+/* Movie Plot */
+#plot {
+	color: #6b7280;
+	font-size: 0.875rem;
+	line-height: 1.4;
+	letter-spacing: 0.4px;
+}
+
+.fa-film {
+	font-size: 80px;
+	color: #dfdddd;
+	text-align: center;
+	margin-top: 120px;
+}
+
+.start-text {
+	text-align: center;
+	color: #dfdddd;
+	font-size: 1.125rem;
+	font-weight: 700;
+}
