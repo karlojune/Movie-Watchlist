@@ -1,105 +1,44 @@
-const movieTitleInput = document.getElementById("movie-title")
-const submitSearchBtn = document.getElementById("search-button")
-const movieResultContainer = document.getElementById("movie-result-container")
-const movieWatchlistContainer = document.getElementById(
-	"movie-watchlist-container"
-)
-const addToWatchlistEl = document.getElementById("add-to-watchlist")
-const removeToWatchlistEl = document.getElementById("remove-from-watchlist")
-
 const keyApi = "63dfefb3"
-let movieTitle = "blade"
+const searchInput = document.getElementById("movie-title-input")
 
-let imdbIdArray = []
-let movieArray = []
-let myLocalStorage = JSON.parse(localStorage.getItem("movie-watch-list")) || []
+let moviesToRender = []
+let moviesLocalStorage = []
 
-async function renderMovieListLocalStorage() {
-	let html = ""
-
-	myLocalStorage.forEach((movie) => {
-		html += `
-	        <li>
-	            <div class="movie-container">
-	                <img src="${movie.Poster}" alt="" />
-	                <div class="movie-detail">
-	                    <div class="movie-title">
-	                        <p class="title">${movie.Title}</p>
-	                        <i class="fa-solid fa-star"></i>
-	                        <p class="rating">${movie.imdbRating}</p>
-	                    </div>
-	                    <div class="movie-runtime">
-	                        <p id="runtime">${movie.Runtime}</p>
-	                        <p id="genre">${movie.Genre}</p>
-							<div id="remove-from-watchlist">
-	                        	<button data-remove-movie-id=${movie.imdbID}>
-									<i class="fa-solid fa-circle-minus"></i>
-									Remove
-								</button>
-							</div>
-	                    </div>
-	                    <p id="plot">
-	                        ${movie.Plot}
-	                    </p>
-	                </div>
-	            </div>
-	        </li>
-	    `
-	})
-	movieWatchlistContainer.innerHTML = html
-}
-// localStorage.clear()
-
-renderMovieListLocalStorage()
-
-submitSearchBtn.addEventListener("click", fetchByMovieTitle)
-
-document.addEventListener("click", function (e) {
-	if (e.target.dataset.addMovieId) {
-		pushMovieToLocalStorage(e.target.dataset.addMovieId)
-	} else if (e.target.dataset.removeMovieId) {
-		removeMovieToLocalStorage(e.target.dataset.removeMovieId)
-		// console.log(e.target.dataset.removeMovieId)
+// Event Listener
+document.addEventListener("click", (e) => {
+	if (e.target.id === "search-button") {
+		fetchMovie()
+	} else if (e.target.dataset.addMovieId) {
+		addToWatchlist(e.target.dataset.addMovieId)
 	}
 })
 
-function removeMovieToLocalStorage(movieId) {
-	// const filteredMovie = myLocalStorage((id) => id.imdbID !== movieId)
-	console.log(movieId)
-}
+// Fetching Movie Details from API
+async function fetchMovie() {
+	moviesToRender = []
 
-function pushMovieToLocalStorage(movieId) {
-	const filteredMovie = movieArray.filter((id) => id.imdbID === movieId)
-	myLocalStorage.push(filteredMovie[0])
-	localStorage.setItem("movie-watch-list", JSON.stringify(myLocalStorage))
-	// addToWatchlistEl.innerHTML = `
-	//     <p>Added to movielist!</p>
-	// `
-}
-
-async function fetchByMovieTitle() {
-	imdbIdArray = []
-	const movieTitle = movieTitleInput.value
 	const res = await fetch(
-		`http://www.omdbapi.com/?apikey=${keyApi}&s=${movieTitle}`
+		`http://www.omdbapi.com/?apikey=${keyApi}&s=${searchInput.value}`
 	)
 	const data = await res.json()
-	data.Search.forEach((id) => imdbIdArray.push(id.imdbID))
-	fetchByImdbTitle()
-	movieTitleInput.value = ""
-}
+	const movieArray = data.Search
 
-async function fetchByImdbTitle() {
-	movieArray = []
-	for (let id of imdbIdArray) {
-		const res = await fetch(`http://www.omdbapi.com/?apikey=${keyApi}&i=${id}`)
+	movieArray.forEach(async (id) => {
+		const res = await fetch(
+			`http://www.omdbapi.com/?apikey=${keyApi}&i=${id.imdbID}`
+		)
 		const data = await res.json()
-		movieArray.push(data)
-	}
-	renderMovieList(movieArray)
+		moviesToRender.push(data)
+		if (moviesToRender.length === movieArray.length) {
+			renderMovieList(moviesToRender)
+		}
+	})
+
+	searchInput.value = ""
 }
 
-async function renderMovieList(movie) {
+// Looping through all the movies and adding them as list items to pass on to render function
+function renderMovieList(movie) {
 	let html = ""
 
 	movie.forEach((movie) => {
@@ -116,12 +55,16 @@ async function renderMovieList(movie) {
 	                    <div class="movie-runtime">
 	                        <p id="runtime">${movie.Runtime}</p>
 	                        <p id="genre">${movie.Genre}</p>
-                            <div id="add-to-watchlist">
-                                <button data-add-movie-id=${movie.imdbID}>
-                                    <i class="fa-solid fa-circle-plus"></i>
-                                    Watchlist
-                                </button>
-                            </div>
+							${
+								moviesLocalStorage.find((id) => id.imdbID === movie.imdbID)
+									? `<p class="in-watchlist">In watchlist</p>`
+									: `<div>
+									<p class="add-to-watchlist" id=${movie.imdbID} data-add-movie-id=${movie.imdbID}>
+										<i class="fa-solid fa-circle-plus"></i>
+										Watchlist
+									</p>
+								</div>`
+							}
 	                    </div>
 	                    <p id="plot">
 	                        ${movie.Plot}
@@ -132,5 +75,35 @@ async function renderMovieList(movie) {
 	    `
 	})
 
-	movieResultContainer.innerHTML = html
+	renderMovie(html)
 }
+
+// renders/injecting the html from the list items to DOM
+function renderMovie(html) {
+	document.getElementById("movie-result-container").innerHTML = html
+}
+
+function addToWatchlist(imdbID) {
+	const checkMovie = moviesLocalStorage.find((movie) => movie.imdbID === imdbID)
+	if (checkMovie) {
+		console.log("already Added to watchlist")
+	} else {
+		moviesToRender.find((movie) => {
+			if (movie.imdbID === imdbID) {
+				moviesLocalStorage.push(movie)
+				localStorage.setItem("watchlist", JSON.stringify(moviesLocalStorage))
+				document.getElementById(movie.imdbID).textContent = `In watchlist`
+				document.getElementById(movie.imdbID).classList.add("in-watchlist")
+			}
+		})
+	}
+}
+
+function getMoviesFromLocalStorage() {
+	let moviesFromLocalStorage = JSON.parse(localStorage.getItem("watchlist"))
+	if (moviesFromLocalStorage) {
+		moviesLocalStorage = moviesFromLocalStorage
+	}
+}
+
+getMoviesFromLocalStorage()
