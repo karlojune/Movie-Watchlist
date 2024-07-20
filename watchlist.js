@@ -67,6 +67,7 @@ function removeFromWatchlist(imdbID) {
 
 	localStorage.setItem("watchlist", JSON.stringify(newMovieArray))
 	getMoviesFromLocalStorage()
+	renderMovieList(moviesLocalStorage)
 	if (!moviesLocalStorage) {
 		movieWatchlistContainer.innerHTML = `
 		<p class="explore-movie-text">
@@ -79,6 +80,7 @@ function removeFromWatchlist(imdbID) {
 		</div>
 		`
 	}
+	console.log(moviesLocalStorage)
 }
 
 getMoviesFromLocalStorage()
