@@ -1,4 +1,4 @@
-const keyApi = "63dfefb3"
+// const keyApi = "63dfefb3"
 const searchInput = document.getElementById("movie-title-input")
 
 let moviesToRender = []
@@ -18,14 +18,14 @@ async function fetchMovie() {
 	moviesToRender = []
 
 	const res = await fetch(
-		`http://www.omdbapi.com/?apikey=${keyApi}&s=${searchInput.value}`
+		`http://www.omdbapi.com/?apikey=63dfefb3&s=${searchInput.value}`
 	)
 	const data = await res.json()
 	const movieArray = data.Search
 
 	movieArray.forEach(async (id) => {
 		const res = await fetch(
-			`http://www.omdbapi.com/?apikey=${keyApi}&i=${id.imdbID}`
+			`http://www.omdbapi.com/?apikey=63dfefb3&i=${id.imdbID}`
 		)
 		const data = await res.json()
 		moviesToRender.push(data)
