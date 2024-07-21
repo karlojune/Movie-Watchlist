@@ -18,14 +18,14 @@ async function fetchMovie() {
 	moviesToRender = []
 
 	const res = await fetch(
-		`http://www.omdbapi.com/?apikey=63dfefb3&s=${searchInput.value}`
+		`https://www.omdbapi.com/?apikey=63dfefb3&s=${searchInput.value}`
 	)
 	const data = await res.json()
 	const movieArray = data.Search
 
 	movieArray.forEach(async (id) => {
 		const res = await fetch(
-			`http://www.omdbapi.com/?apikey=63dfefb3&i=${id.imdbID}`
+			`https://www.omdbapi.com/?apikey=63dfefb3&i=${id.imdbID}`
 		)
 		const data = await res.json()
 		moviesToRender.push(data)
