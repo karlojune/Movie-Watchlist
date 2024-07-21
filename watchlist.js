@@ -56,6 +56,18 @@ function renderMovieList(movie) {
 // renders/injecting the html from the list items to DOM
 function renderMovie(html) {
 	movieWatchlistContainer.innerHTML = html
+	// if (moviesLocalStorage.length === 0) {
+	// 	movieWatchlistContainer.innerHTML = `
+	// 	<p class="explore-movie-text">
+	// 		Your watchlist is looking a little empty...
+	// 	</p>
+	// 	<div class="add-some-movies">
+	// 		<a href="index.html">
+	// 			<i class="fa-solid fa-circle-plus"></i>Let’s add some movies!
+	// 		</a>
+	// 	</div>
+	// 	`
+	// }
 }
 
 function removeFromWatchlist(imdbID) {
@@ -67,8 +79,10 @@ function removeFromWatchlist(imdbID) {
 
 	localStorage.setItem("watchlist", JSON.stringify(newMovieArray))
 	getMoviesFromLocalStorage()
-	renderMovieList(moviesLocalStorage)
-	if (!moviesLocalStorage) {
+
+	if (moviesLocalStorage.length) {
+		renderMovieList(moviesLocalStorage)
+	} else {
 		movieWatchlistContainer.innerHTML = `
 		<p class="explore-movie-text">
 			Your watchlist is looking a little empty...
@@ -80,7 +94,6 @@ function removeFromWatchlist(imdbID) {
 		</div>
 		`
 	}
-	console.log(moviesLocalStorage)
 }
 
 getMoviesFromLocalStorage()

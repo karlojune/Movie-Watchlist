@@ -23,6 +23,12 @@ async function fetchMovie() {
 	const data = await res.json()
 	const movieArray = data.Search
 
+	// if (data.Response === "True") {
+	// 	console.log(data)
+	// } else {
+	// 	console.log(data.Error)
+	// }
+
 	movieArray.forEach(async (id) => {
 		const res = await fetch(
 			`https://www.omdbapi.com/?apikey=63dfefb3&i=${id.imdbID}`
