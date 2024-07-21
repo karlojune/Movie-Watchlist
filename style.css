@@ -206,10 +206,15 @@ img {
 }
 
 .start-text,
-.explore-movie-text {
+.explore-movie-text,
+.not-found {
 	text-align: center;
 	color: #dfdddd;
 	font-size: 1.125rem;
 	font-weight: 700;
 	padding-bottom: 1em;
+}
+
+.not-found {
+	margin-top: 50px;
 }
